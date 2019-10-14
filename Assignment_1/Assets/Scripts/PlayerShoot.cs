@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
 {
+
+    private int bullets = 10;
+
     public Projectile projectilePrefab;
     public LayerMask mask;
 
@@ -17,9 +20,10 @@ public class PlayerShoot : MonoBehaviour
     void Update()
     {
         bool mouseButtonDown = Input.GetMouseButtonDown(0);
-        if (mouseButtonDown)
+        if (mouseButtonDown && bullets > 0)
         {
             raycastOnMouseClick();
+            bullets -= 1;
         }
     }
 
