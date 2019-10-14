@@ -63,7 +63,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\CameraRig.cs" />
+    <Compile Include="Assets\Scripts\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Goal.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
+    <Compile Include="Assets\Scripts\PlayerShoot.cs" />
+    <Compile Include="Assets\Scripts\Projectile.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/soslo/OneDrive/Documents/GitHub/OPIM_3223_Assignment_1/Assignment_1/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

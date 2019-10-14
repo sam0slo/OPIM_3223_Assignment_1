@@ -6,9 +6,9 @@ public class Player : MonoBehaviour
 {
     public float acceleration = 500;
     public float maxSpeed = 5000;
-
-    public int health = 10;
+    
     public int damage = 5;
+    public int health = 20;
 
     private Rigidbody rigidBody;
     private KeyCode[] inputKeys;
@@ -49,5 +49,22 @@ public class Player : MonoBehaviour
         }
     }
 
-    
+    void collidedWithEnemy(Enemy enemy)
+    {
+        enemy.Attack(this);
+        if (health <= 0)
+        {
+            Destroy(this.gameObject);
+            
+        }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        Enemy enemy = collision.collider.gameObject.GetComponent<Enemy>();
+        if (enemy)
+        {
+            collidedWithEnemy(enemy);
+        }
+    }
 }
