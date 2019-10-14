@@ -14,7 +14,7 @@
 
 - Use W A S D to move
 
-- Use M1 to shoot projectiles at the enemies
+- Use M1 to shoot bullets at the enemies
 
 - Enemies take 2 shots to kill
 
@@ -24,4 +24,4 @@
 
 - If three enemies reach the cylinder, the cylinder is destroyed and you lose
 
-- You win if all the enemies are dead, you are alive, and the goal is still alive
+- You win if all the enemies are dead, you are alive, and the cylinder is still alive
