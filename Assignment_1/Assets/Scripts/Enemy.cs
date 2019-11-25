@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public AudioClip explosion;
+    private AudioSource audioSource;
 
     public float moveSpeed = 5000;
     public int health = 10;
     public int damage = 10;
     public Transform targetTransform;
+    bool playedSound;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        audioSource = GetComponent<AudioSource>();
+        playedSound = false;
     }
 
 
@@ -28,13 +32,21 @@ public class Enemy : MonoBehaviour
 
     public void Attack(Player player)
     {
-        player.health -= this.damage;
+        if(this.health > 0)
+        {
+            player.health -= this.damage;
+        }
+        
         Destroy(this.gameObject);
     }
 
     public void Attack(Goal goal)
     {
-        goal.health -= this.damage;
+        if(this.health > 0)
+        {
+            goal.health -= this.damage;
+        }
+        
         Destroy(this.gameObject);
     }
 
@@ -44,7 +56,13 @@ public class Enemy : MonoBehaviour
         this.health -= damage;
         if (this.health <= 0)
         {
-            Destroy(this.gameObject);
+            if (!playedSound)
+            {
+                this.transform.localScale = new Vector3(0, 0, 0);
+                audioSource.PlayOneShot(explosion);
+                Destroy(this.gameObject, 1f);
+                playedSound = true;
+            }
         }
     }
 

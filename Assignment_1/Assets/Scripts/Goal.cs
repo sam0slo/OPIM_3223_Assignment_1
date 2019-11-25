@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Goal : MonoBehaviour
 {
     public int health = 30;
-    
+
+    public event Action<Goal> onGoalDeath;
+
+    public GameObject bigExplosionParticlesPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -24,8 +28,16 @@ public class Goal : MonoBehaviour
         enemy.Attack(this);
         if (health <= 0)
         {
-            Destroy(this.gameObject);
-            
+            if (onGoalDeath != null)
+            {
+
+                if (bigExplosionParticlesPrefab)
+                {
+                    GameObject bigExplosion = (GameObject)Instantiate(bigExplosionParticlesPrefab, new Vector3(23f , 0f , -20.5f) , bigExplosionParticlesPrefab.transform.rotation);
+                    Destroy(bigExplosion, bigExplosion.GetComponent<ParticleSystem>().main.startLifetimeMultiplier);
+                }
+                onGoalDeath(this);
+            }
         }
     }
 

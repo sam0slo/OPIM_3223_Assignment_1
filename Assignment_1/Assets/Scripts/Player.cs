@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Player : MonoBehaviour
 {
+    public GameObject explosionParticlesPrefab;
+
     public float acceleration = 500;
     public float maxSpeed = 5000;
     
@@ -14,6 +17,8 @@ public class Player : MonoBehaviour
     private KeyCode[] inputKeys;
     private Vector3[] keyDirections;
 
+    public event Action<Player> onPlayerDeath;
+
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +26,7 @@ public class Player : MonoBehaviour
         inputKeys = new KeyCode[] { KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D };
         keyDirections = new Vector3[] { Vector3.forward, Vector3.left, Vector3.back, Vector3.right };
         rigidBody = GetComponent<Rigidbody>();
+
     }
 
     void FixedUpdate()
@@ -54,8 +60,19 @@ public class Player : MonoBehaviour
         enemy.Attack(this);
         if (health <= 0)
         {
-            Destroy(this.gameObject);
-            
+            if (onPlayerDeath != null)
+            {
+                this.transform.localScale = new Vector3(0, 0, 0);
+
+                if (explosionParticlesPrefab)
+                {
+                    GameObject explosion = (GameObject)Instantiate(explosionParticlesPrefab, transform.position, explosionParticlesPrefab.transform.rotation);
+                    Destroy(explosion, explosion.GetComponent<ParticleSystem>().main.startLifetimeMultiplier);
+                }
+
+                onPlayerDeath(this);
+            }
+
         }
     }
 
